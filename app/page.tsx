@@ -46,7 +46,7 @@ export default function LoginPage() {
       localStorage.setItem("token", data.token)
 
       // Redirigir a dashboard
-      router.push("/dashboard")
+      router.push("/panel")
     } catch (err: any) {
       setError(err.message)
       setIsLoading(false)
