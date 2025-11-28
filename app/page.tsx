@@ -32,26 +32,35 @@ export default function LoginPage() {
         return
       }
 
-     
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Llamada al backend
+      const res = await fetch("http://localhost:3001/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo: email, contraseña: password }),
+      })
 
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Error en la autenticación")
+
+      // Guardar token en localStorage
+      localStorage.setItem("token", data.token)
+
+      // Redirigir a dashboard
       router.push("/dashboard")
-    } catch (err) {
-      setError("Error en la autenticación. Intenta de nuevo.")
+    } catch (err: any) {
+      setError(err.message)
       setIsLoading(false)
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
-      
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
       </div>
 
       <div className="w-full max-w-md z-10">
-        
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="bg-blue-600 dark:bg-blue-500 p-3 rounded-full">
@@ -62,13 +71,9 @@ export default function LoginPage() {
           <p className="text-slate-600 dark:text-slate-300 text-sm">Análisis de riesgo de deserción académica</p>
         </div>
 
-        
         <Card className="bg-white dark:bg-slate-800 shadow-2xl border-0">
           <div className="p-8">
-           
-
             <form onSubmit={handleLogin} className="space-y-5">
-              
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                   Email Institucional
@@ -83,7 +88,6 @@ export default function LoginPage() {
                 />
               </div>
 
-              
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Contraseña</label>
@@ -101,7 +105,6 @@ export default function LoginPage() {
                 />
               </div>
 
-             
               {error && (
                 <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 flex gap-2">
                   <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
@@ -109,7 +112,6 @@ export default function LoginPage() {
                 </div>
               )}
 
-              
               <Button
                 type="submit"
                 disabled={isLoading}
@@ -126,14 +128,12 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            
             <div className="my-6 flex items-center gap-3">
               <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
               <span className="text-xs text-slate-500 dark:text-slate-400">O</span>
               <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
             </div>
 
-           
             <p className="text-center text-sm text-slate-600 dark:text-slate-300">
               ¿No tienes cuenta?{" "}
               <a href="/register" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
@@ -143,7 +143,6 @@ export default function LoginPage() {
           </div>
         </Card>
 
-        
         <div className="mt-8 text-center">
           <p className="text-xs text-slate-600 dark:text-slate-400">
             Sistema desarrollado para la predicción de deserción académica en estudiantes de Ingeniería
