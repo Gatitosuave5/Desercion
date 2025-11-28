@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Upload, File, AlertCircle, CheckCircle } from "lucide-react"
 import DatasetUpload from "@/components/dataset-upload"
 import DatasetPreview from "@/components/dataset-preview"
+import * as tf from "@tensorflow/tfjs"
 
 export default function Home() {
   const [data, setData] = useState<any[] | null>(null)
