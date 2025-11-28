@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="flex h-screen">
 
-          {/* Sidebar */}
+         
           <aside className="w-64 bg-gray-900 text-white p-4">
             <h2 className="text-xl font-bold mb-6">Mi Panel</h2>
             <nav className="space-y-2">
@@ -43,7 +43,7 @@ export default function RootLayout({
             </nav>
           </aside>
 
-          {/* Main content */}
+          
           <div className="flex-1 flex flex-col">
             <header className="h-16 bg-white shadow px-4 flex items-center justify-between">
               <h1 className="text-lg font-semibold">Dashboard</h1>
